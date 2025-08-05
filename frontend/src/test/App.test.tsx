@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, waitFor } from './utils'
-import userEvent from '@testing-library/user-event'
 import App from '../App'
-import { mockFetch, mockFetchError, createMockReturnsResponse } from './utils'
 
 // Mock the api module
 vi.mock('../services/api', () => ({
@@ -41,9 +39,8 @@ describe('App', () => {
     
     render(<App />)
     
-    await waitFor(() => {
-      expect(screen.getByText(`Error: ${errorMessage}`)).toBeInTheDocument()
-    })
+    await waitFor(1000)
+    expect(screen.getByText(`Error: ${errorMessage}`)).toBeInTheDocument()
   })
 
   it('should handle API error with response data', async () => {
@@ -60,9 +57,8 @@ describe('App', () => {
     
     render(<App />)
     
-    await waitFor(() => {
-      expect(screen.getByText('Error: Invalid date range')).toBeInTheDocument()
-    })
+    await waitFor(1000)
+    expect(screen.getByText('Error: Invalid date range')).toBeInTheDocument()
   })
 
   it('should have correct page structure and styling', () => {
