@@ -40,8 +40,8 @@ function subtractBusinessDays(date: Date, businessDays: number): Date {
 }
 
 function App() {
-  const defaultEndDate = getPreviousBusinessDay();
-  const [startDate, setStartDate] = useState<Date>(subtractBusinessDays(defaultEndDate, 4));
+  const defaultEndDate = new Date();
+  const [startDate, setStartDate] = useState<Date>(subDays(defaultEndDate, 30));
   const [endDate, setEndDate] = useState<Date>(defaultEndDate);
   const [data, setData] = useState<ReturnsResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
