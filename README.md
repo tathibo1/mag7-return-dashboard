@@ -5,7 +5,7 @@ A full-stack application for visualizing daily returns of the MAG7 stocks (Micro
 ## Features
 
 - Interactive grid layout showing individual stock performance
-- Line charts with zoom and tooltip functionality
+- ~~Line charts with zoom and tooltip functionality~~ (TODO)
 - Date range picker for custom time periods
 - Summary statistics (min, max, mean returns)
 - Performance comparison table
@@ -197,7 +197,3 @@ All tests are organized in `frontend/src/test/`:
 - **Service tests**: API calls and data transformation
 - **Mocked external APIs**: Reliable testing without network calls
 - **Coverage reporting**: HTML reports generated in `coverage/` (frontend) and `htmlcov/` (backend)
-
-TODO:
-[ ] update backend to use pydantic
-[ ] implement zooming
