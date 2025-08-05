@@ -118,3 +118,4 @@ TODO:
 [ ] testing
 [ ] set default end date to today on fe
 [ ] set default start date to end-30 days
+[ ] implement zooming

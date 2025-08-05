@@ -11,39 +11,39 @@ const SummaryTable: React.FC<SummaryTableProps> = ({ summary }) => {
   const symbols = Object.keys(summary).sort();
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Performance Summary</h2>
+    <div className="bg-gray-800 rounded-lg shadow-xl p-6 mt-6 border border-gray-700">
+      <h2 className="text-2xl font-bold mb-4 text-gray-100">Performance Summary</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-gray-700">
+          <thead className="bg-gray-700">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                 Symbol
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
                 Min Return
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
                 Mean Return
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-300 uppercase tracking-wider">
                 Max Return
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-gray-800 divide-y divide-gray-700">
             {symbols.map((symbol) => (
-              <tr key={symbol} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <tr key={symbol} className="hover:bg-gray-700">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
                   {symbol}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-red-400">
                   {formatPercent(summary[symbol].min)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-700">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-300">
                   {formatPercent(summary[symbol].mean)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-600">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-green-400">
                   {formatPercent(summary[symbol].max)}
                 </td>
               </tr>

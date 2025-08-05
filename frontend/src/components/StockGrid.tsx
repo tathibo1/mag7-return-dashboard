@@ -12,7 +12,7 @@ const StockGrid: React.FC<StockGridProps> = ({ data, loading, error }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-gray-600">Loading stock data...</div>
+        <div className="text-lg text-gray-300">Loading stock data...</div>
       </div>
     );
   }
@@ -20,7 +20,7 @@ const StockGrid: React.FC<StockGridProps> = ({ data, loading, error }) => {
   if (error) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-red-600">Error: {error}</div>
+        <div className="text-lg text-red-400">Error: {error}</div>
       </div>
     );
   }
@@ -28,7 +28,7 @@ const StockGrid: React.FC<StockGridProps> = ({ data, loading, error }) => {
   if (!data) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-lg text-gray-600">No data to display</div>
+        <div className="text-lg text-gray-300">No data to display</div>
       </div>
     );
   }
