@@ -18,8 +18,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   onFetchData
 }) => {
   return (
-    <div className="bg-gray-800 rounded-lg shadow-xl p-6 mb-6 border border-gray-700">
-      <h2 className="text-2xl font-bold mb-4 text-gray-100">Select Date Range</h2>
+    <div className="bg-transparent mb-6">
       <div className="flex flex-col md:flex-row gap-4 items-end">
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1">

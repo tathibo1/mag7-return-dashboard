@@ -44,6 +44,10 @@ const StockCard: React.FC<StockCardProps> = ({ symbol, data, stats }) => {
               dataKey="date" 
               tick={{ fontSize: 10, fill: '#9CA3AF' }}
               interval="preserveStartEnd"
+              tickFormatter={(value) => {
+                const date = new Date(value);
+                return `${date.getMonth() + 1}/${date.getDate()}`;
+              }}
             />
             <YAxis 
               tick={{ fontSize: 10, fill: '#9CA3AF' }}
