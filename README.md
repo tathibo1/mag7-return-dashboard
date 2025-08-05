@@ -111,11 +111,59 @@ acadia/
 - **Business Day Filtering**: Frontend automatically skips weekends to reduce unnecessary API calls
 - **Thread Pool Isolation**: Fixes yfinance HTTP session conflicts with uvicorn's async event loop
 
+## Testing
+
+The backend includes a comprehensive test suite using pytest with excellent coverage.
+
+### Running Tests
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Activate virtual environment and install dependencies
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Run all unit tests (default, fast)
+pytest
+
+# Run with verbose output
+pytest -v
+
+# Run with coverage report
+pytest --cov=services --cov=app --cov-report=html --cov-report=term-missing
+
+# Run specific test types using markers
+pytest -m unit         # Unit tests only
+pytest -m integration  # Integration tests only
+pytest -m slow --slow  # Slow tests (external API calls)
+
+# Run specific test file
+pytest tests/test_stock_data.py
+
+# Run specific test function
+pytest tests/test_app.py::TestFastAPIEndpoints::test_health_check
+```
+
+### Test Structure
+
+- **Unit tests**: Fast, isolated tests with mocked dependencies
+- **Integration tests**: End-to-end workflow testing
+- **Mocked external APIs**: Reliable testing without network calls
+- **Coverage reporting**: HTML reports generated in `htmlcov/`
+
+### Test Categories
+
+- `test_stock_data.py` - StockDataService functionality (11 tests)
+- `test_cache.py` - Cache behavior and TTL/LRU logic (14 tests) 
+- `test_app.py` - FastAPI endpoints and validation (17 tests)
+- `test_integration.py` - End-to-end workflows (8 tests)
+
 TODO:
 [ ] use pydantic
 [ ] use pandas
 [ ] fix chart error where first and last days are not being graphed
-[ ] testing
 [ ] set default end date to today on fe
 [ ] set default start date to end-30 days
 [ ] implement zooming
