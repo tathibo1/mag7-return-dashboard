@@ -113,9 +113,9 @@ acadia/
 
 ## Testing
 
-The backend includes a comprehensive test suite using pytest with excellent coverage.
+Both frontend and backend include comprehensive test suites with excellent coverage.
 
-### Running Tests
+### Backend Testing (Python/pytest)
 
 ```bash
 # Navigate to backend directory
@@ -146,24 +146,58 @@ pytest tests/test_stock_data.py
 pytest tests/test_app.py::TestFastAPIEndpoints::test_health_check
 ```
 
+**Backend Test Categories:**
+- `test_stock_data.py` - StockDataService functionality
+- `test_cache.py` - Cache behavior and TTL/LRU logic 
+- `test_app.py` - FastAPI endpoints and validation
+- `test_integration.py` - End-to-end workflows
+
+### Frontend Testing (React/Vitest)
+
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+
+# Run tests with UI (interactive)
+npm run test:ui
+
+# Run specific test file
+npx vitest src/components/__tests__/StockCard.test.tsx
+
+# Run tests matching pattern
+npx vitest --grep "StockCard"
+```
+
+**Frontend Test Categories:**
+All tests are organized in `frontend/src/test/`:
+- `App.test.tsx` - Main application component and state management
+- `components/StockCard.test.tsx` - Individual stock chart components
+- `components/StockGrid.test.tsx` - Stock grid layout and loading states
+- `components/SummaryTable.test.tsx` - Performance summary table
+- `components/DatePicker.test.tsx` - Date selection controls
+- `services/api.test.ts` - API service layer and data fetching
+
 ### Test Structure
 
 - **Unit tests**: Fast, isolated tests with mocked dependencies
 - **Integration tests**: End-to-end workflow testing
+- **Component tests**: React component rendering and interaction
+- **Service tests**: API calls and data transformation
 - **Mocked external APIs**: Reliable testing without network calls
-- **Coverage reporting**: HTML reports generated in `htmlcov/`
-
-### Test Categories
-
-- `test_stock_data.py` - StockDataService functionality (11 tests)
-- `test_cache.py` - Cache behavior and TTL/LRU logic (14 tests) 
-- `test_app.py` - FastAPI endpoints and validation (17 tests)
-- `test_integration.py` - End-to-end workflows (8 tests)
+- **Coverage reporting**: HTML reports generated in `coverage/` (frontend) and `htmlcov/` (backend)
 
 TODO:
-[ ] use pydantic
-[ ] use pandas
-[ ] fix chart error where first and last days are not being graphed
-[ ] set default end date to today on fe
-[ ] set default start date to end-30 days
+[ ] update backend to use pydantic
 [ ] implement zooming
