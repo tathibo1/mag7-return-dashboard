@@ -27,11 +27,18 @@ const StockCard: React.FC<StockCardProps> = ({ symbol, data, stats }) => {
 
   return (
     <div className="bg-gray-800 rounded-lg shadow-xl p-4 hover:shadow-2xl transition-shadow border border-gray-700">
-      <h3 className="text-xl font-bold mb-2 text-gray-100">{symbol}</h3>
+      <div className="flex items-start justify-between mb-4">
+        <h3 className="text-xl font-bold text-gray-100 pb-2">{symbol}</h3>
+        <div className="flex space-x-3 text-xs">
+          <div className="text-gray-400">Max: <span className="font-semibold text-green-400">{formatPercent(stats.max)}</span></div>
+          <div className="text-gray-400">Mean: <span className="font-semibold text-gray-300">{formatPercent(stats.mean)}</span></div>
+          <div className="text-gray-400">Min: <span className="font-semibold text-red-400">{formatPercent(stats.min)}</span></div>
+        </div>
+      </div>
       
-      <div className="h-48 mb-4">
+      <div className="h-56 mb-4">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+          <LineChart data={chartData} margin={{ top: 5, right: 5, left: -10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
             <XAxis 
               dataKey="date" 
@@ -58,21 +65,6 @@ const StockCard: React.FC<StockCardProps> = ({ symbol, data, stats }) => {
             />
           </LineChart>
         </ResponsiveContainer>
-      </div>
-      
-      <div className="grid grid-cols-3 gap-2 text-sm">
-        <div className="text-center">
-          <p className="text-gray-400">Min</p>
-          <p className="font-semibold text-red-400">{formatPercent(stats.min)}</p>
-        </div>
-        <div className="text-center">
-          <p className="text-gray-400">Mean</p>
-          <p className="font-semibold text-gray-300">{formatPercent(stats.mean)}</p>
-        </div>
-        <div className="text-center">
-          <p className="text-gray-400">Max</p>
-          <p className="font-semibold text-green-400">{formatPercent(stats.max)}</p>
-        </div>
       </div>
     </div>
   );
