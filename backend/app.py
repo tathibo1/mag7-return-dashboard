@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="MAG7 Stock Returns API", version="1.0.0")
 
-# Thread pool for CPU-bound tasks
 executor = ThreadPoolExecutor(max_workers=4)
 
 app.add_middleware(
@@ -29,38 +28,45 @@ app.add_middleware(
 async def health_check():
     return {"status": "healthy"}
 
-@app.get("/returns")
-async def get_returns(
-    start: str = Query(..., description="Start date in YYYY-MM-DD format"),
-    end: str = Query(..., description="End date in YYYY-MM-DD format")
+@app.get("/ticker-return")
+async def get_ticker_return(
+    ticker: str = Query(..., description="Stock ticker symbol (e.g., MSFT, AAPL)"),
+    date: str = Query(..., description="Date in YYYY-MM-DD format")
 ):
     try:
-        start_date = datetime.strptime(start, "%Y-%m-%d").date()
-        end_date = datetime.strptime(end, "%Y-%m-%d").date()
+        target_date = datetime.strptime(date, "%Y-%m-%d").date()
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
     
-    if start_date >= end_date:
-        raise HTTPException(status_code=400, detail="Start date must be before end date")
+    if target_date > date.today():
+        raise HTTPException(status_code=400, detail="Date cannot be in the future")
     
-    if end_date > date.today():
-        raise HTTPException(status_code=400, detail="End date cannot be in the future")
+    ticker = ticker.upper()
     
-    logger.info(f"Fetching data for {start} to {end}")
+    # Check cache first
+    cached_data = cache_instance.get(ticker, date)
+    if cached_data:
+        logger.info(f"Cache hit for {ticker}:{date}")
+        return cached_data
+    
+    logger.info(f"Cache miss for {ticker}:{date}, fetching data...")
     
     try:
-        # Run yfinance in thread pool to avoid blocking the event loop
-        # This isolates yfinance's synchronous HTTP calls from uvicorn's async event loop
+        # Run yfinance call in thread pool
         loop = asyncio.get_event_loop()
-        data = await loop.run_in_executor(
+        return_data = await loop.run_in_executor(
             executor, 
-            StockDataService.fetch_returns_batch, 
-            start, 
-            end
+            StockDataService.fetch_single_day_return, 
+            ticker, 
+            date
         )
-        return data
+        
+        # Cache the result
+        cache_instance.set(ticker, date, return_data)
+        
+        return return_data
     except Exception as e:
-        logger.error(f"Error fetching returns: {str(e)}")
+        logger.error(f"Error fetching return for {ticker} on {date}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error fetching stock data: {str(e)}")
 
 
