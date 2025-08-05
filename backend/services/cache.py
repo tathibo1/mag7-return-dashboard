@@ -1,36 +1,21 @@
-from datetime import datetime, timedelta
-from typing import Dict, Any, Optional
-import hashlib
-import json
+from cachetools import TTLCache
+from typing import Any, Optional
 
 
 class InMemoryCache:
-    def __init__(self, ttl_seconds: int = 3600):
-        self._cache: Dict[str, Dict[str, Any]] = {}
-        self._ttl = timedelta(seconds=ttl_seconds)
+    def __init__(self, ttl_seconds: int = 3600, maxsize: int = 1000):
+        self._cache = TTLCache(maxsize=maxsize, ttl=ttl_seconds)  # eviction strategy: LRU + TTL
     
-    def _generate_key(self, start_date: str, end_date: str) -> str:
-        key_string = f"returns:{start_date}:{end_date}"
-        return hashlib.md5(key_string.encode()).hexdigest()
+    def _generate_key(self, ticker: str, date: str) -> str:
+        return f"ticker:{ticker}:{date}"
     
-    def get(self, start_date: str, end_date: str) -> Optional[Dict[str, Any]]:
-        key = self._generate_key(start_date, end_date)
-        
-        if key in self._cache:
-            entry = self._cache[key]
-            if datetime.now() < entry["expires_at"]:
-                return entry["data"]
-            else:
-                del self._cache[key]
-        
-        return None
+    def get(self, ticker: str, date: str) -> Optional[Any]:
+        key = self._generate_key(ticker, date)
+        return self._cache.get(key)
     
-    def set(self, start_date: str, end_date: str, data: Dict[str, Any]) -> None:
-        key = self._generate_key(start_date, end_date)
-        self._cache[key] = {
-            "data": data,
-            "expires_at": datetime.now() + self._ttl
-        }
+    def set(self, ticker: str, date: str, data: Any) -> None:
+        key = self._generate_key(ticker, date)
+        self._cache[key] = data
     
     def clear(self) -> None:
         self._cache.clear()

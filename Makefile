@@ -8,10 +8,10 @@ install-frontend:
 
 install: install-backend install-frontend
 
-run-backend:
-	cd backend && .venv/bin/python app.py
+run-be:
+	cd backend && .venv/bin/uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 
-run-frontend:
+run-fe:
 	cd frontend && npm run dev
 
 setup:
@@ -45,7 +45,7 @@ logs:
 
 kill:
 	@echo "Stopping all services..."
-	@pkill -f "python app.py" || true
+	@pkill -f "uvicorn" || true
 	@pkill -f "npm run dev" || true
 	@pkill -f "vite" || true
 	@echo "✓ All services stopped"

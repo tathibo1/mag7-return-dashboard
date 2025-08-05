@@ -1,3 +1,12 @@
+export interface TickerReturn {
+  ticker: string;
+  date: string;
+  return: number | null;
+  price?: number;
+  previous_price?: number;
+  error?: string;
+}
+
 export interface ReturnData {
   date: string;
   return: number;
