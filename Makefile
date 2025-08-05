@@ -29,7 +29,7 @@ dev: setup
 	@echo "📊 Backend API will be available at http://localhost:8000"
 	@echo "🌐 Frontend will be available at http://localhost:3000"
 	@echo "🔥 Starting both services..."
-	@make -j2 run-backend run-frontend
+	@make -j2 run-be run-fe
 
 build:
 	docker-compose build

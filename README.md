@@ -38,7 +38,7 @@ A full-stack application for visualizing daily returns of the MAG7 stocks (Micro
 
 ### Local Development
 
-Simply run:
+**Start both services (recommended):**
 ```bash
 make dev
 ```
@@ -48,10 +48,23 @@ This single command will:
 - Start both backend and frontend servers
 - Open the app in your browser at http://localhost:3000
 
-**Manual installation (if preferred):**
+**Run services individually:**
 ```bash
-make install  # Install all dependencies first
-make dev      # Then run the services
+# Backend only (FastAPI server at http://localhost:8000)
+make run-be
+
+# Frontend only (Vite dev server at http://localhost:3000)
+make run-fe
+
+# Or install dependencies manually first
+make install  # Install all dependencies
+make run-be   # Then run backend
+make run-fe   # Then run frontend (in another terminal)
+```
+
+**Stop all services:**
+```bash
+make kill
 ```
 
 The frontend will be available at http://localhost:3000 and the backend API at http://localhost:8000
