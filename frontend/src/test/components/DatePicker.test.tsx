@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '../utils'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen } from '../utils'
 import userEvent from '@testing-library/user-event'
 import DatePicker from '../../components/DatePicker'
 import { TEST_DATES } from '../utils'

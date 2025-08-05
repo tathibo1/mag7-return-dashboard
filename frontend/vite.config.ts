@@ -9,5 +9,8 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist'
+  },
+  define: {
+    'import.meta.env': 'import.meta.env'
   }
 })

@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
+import { vi } from 'vitest'
 import { ReturnsResponse, StockStats, ReturnData } from '../types'
 
 // Custom render function that can be extended with providers if needed

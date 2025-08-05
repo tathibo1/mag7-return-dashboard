@@ -1,43 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from './components/DatePicker';
 import StockGrid from './components/StockGrid';
 import SummaryTable from './components/SummaryTable';
 import { api } from './services/api';
 import { ReturnsResponse } from './types';
-import { format, subMonths, subDays } from 'date-fns';
+import { format, subDays } from 'date-fns';
 
-function getPreviousBusinessDay(): Date {
-  const today = new Date();
-  const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-  
-  // If today is Monday (1), go back 3 days to Friday
-  // If today is Sunday (0), go back 2 days to Friday
-  // Otherwise, go back 1 day
-  let daysToSubtract = 1;
-  if (dayOfWeek === 1) { // Monday
-    daysToSubtract = 3;
-  } else if (dayOfWeek === 0) { // Sunday
-    daysToSubtract = 2;
-  }
-  
-  return subDays(today, daysToSubtract);
-}
 
-function subtractBusinessDays(date: Date, businessDays: number): Date {
-  let currentDate = new Date(date);
-  let daysSubtracted = 0;
-  
-  while (daysSubtracted < businessDays) {
-    currentDate = subDays(currentDate, 1);
-    const dayOfWeek = currentDate.getDay();
-    // Count only weekdays (Monday=1 to Friday=5)
-    if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-      daysSubtracted++;
-    }
-  }
-  
-  return currentDate;
-}
 
 function App() {
   const defaultEndDate = new Date();
