@@ -7,8 +7,9 @@ const MAG7_SYMBOLS = ["MSFT", "AAPL", "GOOGL", "AMZN", "NVDA", "META", "TSLA"];
 // Generate business days only (Monday-Friday)
 function generateBusinessDays(startDate: string, endDate: string): string[] {
   const dates: string[] = [];
-  const start = new Date(startDate);
-  const end = new Date(endDate);
+  // Parse dates in local timezone to avoid timezone shifting
+  const start = new Date(startDate + 'T00:00:00');
+  const end = new Date(endDate + 'T00:00:00');
   
   for (const current = new Date(start); current <= end; current.setDate(current.getDate() + 1)) {
     const dayOfWeek = current.getDay();

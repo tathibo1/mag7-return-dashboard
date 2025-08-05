@@ -18,11 +18,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
   onFetchData
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Select Date Range</h2>
-      <div className="flex flex-col md:flex-row gap-4 items-end">
+    <div className="bg-transparent mb-6">
+      <div className="flex flex-col md:flex-row gap-4 items-end justify-center">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-300 mb-1">
             Start Date
           </label>
           <ReactDatePicker
@@ -33,12 +32,12 @@ const DatePicker: React.FC<DatePickerProps> = ({
             endDate={endDate}
             maxDate={new Date()}
             dateFormat="yyyy-MM-dd"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-300 mb-1">
             End Date
           </label>
           <ReactDatePicker
@@ -50,13 +49,13 @@ const DatePicker: React.FC<DatePickerProps> = ({
             minDate={startDate}
             maxDate={new Date()}
             dateFormat="yyyy-MM-dd"
-            className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         
         <button
           onClick={onFetchData}
-          className="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors"
+          className="px-6 py-2 bg-gray-800 text-white font-medium rounded-md hover:bg-gray-700 transition-colors"
         >
           Fetch Data
         </button>
