@@ -26,7 +26,7 @@ class StockDataService:
                 logger.info(f"Fetching {symbol}")
                 
                 ticker = yf.Ticker(symbol)
-                hist = ticker.history(start=start_date, end=end_date)
+                hist = ticker.history(interval='1d', start=start_date, end=end_date)
                 
                 if hist.empty:
                     logger.warning(f"No data for {symbol}")

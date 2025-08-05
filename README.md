@@ -101,7 +101,6 @@ acadia/
 ```
 
 TODO:
-[ ] use fast api - there's been trouble using yfinance within uvicorn, what the same yf functionality works in a native python server
 [ ] use pydantic
 [ ] use pandas
 [ ] fix chart error where first and last days are not being graphed
