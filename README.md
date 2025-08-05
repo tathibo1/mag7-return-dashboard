@@ -9,16 +9,18 @@ A full-stack application for visualizing daily returns of the MAG7 stocks (Micro
 - Date range picker for custom time periods
 - Summary statistics (min, max, mean returns)
 - Performance comparison table
-- In-memory caching for API optimization
+- Granular ticker+date caching with LRU eviction
+- Parallel data fetching for improved performance
 - Responsive design for all devices
 
 ## Tech Stack
 
 ### Backend
 - Python 3.11+
-- FastAPI (lightweight version)
-- yfinance
-- In-memory caching with TTL
+- FastAPI with Uvicorn ASGI server
+- yfinance for real-time stock data
+- cachetools for LRU+TTL caching
+- Thread pool executor for parallel data fetching
 
 ### Frontend
 - React 18
@@ -75,18 +77,20 @@ make down
 ## API Endpoints
 
 - `GET /health` - Health check endpoint
-- `GET /returns?start=YYYY-MM-DD&end=YYYY-MM-DD` - Fetch stock returns for date range
+- `GET /ticker-return?ticker=SYMBOL&date=YYYY-MM-DD` - Fetch daily return for a specific stock
+  - Returns: `{ ticker, date, return, price, previous_price }`
+  - Cached per ticker+date combination
+  - Handles non-trading days automatically
 
 ## Project Structure
 
 ```
 acadia/
 ├── backend/
-│   ├── app.py              # FastAPI application
-│   ├── models.py           # Pydantic models
+│   ├── app.py              # FastAPI application with Uvicorn
 │   ├── services/
-│   │   ├── stock_data.py   # Yahoo Finance integration
-│   │   └── cache.py        # Caching implementation
+│   │   ├── stock_data.py   # Yahoo Finance integration with parallel fetching
+│   │   └── cache.py        # TTL+LRU caching with cachetools
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
@@ -100,8 +104,17 @@ acadia/
 └── Makefile                # Build automation
 ```
 
+## Performance Features
+
+- **Parallel Fetching**: All MAG7 stocks are fetched concurrently using a thread pool
+- **Smart Caching**: Each ticker+date combination is cached individually (1-hour TTL, 1000 entry limit)
+- **Business Day Filtering**: Frontend automatically skips weekends to reduce unnecessary API calls
+- **Thread Pool Isolation**: Fixes yfinance HTTP session conflicts with uvicorn's async event loop
+
 TODO:
 [ ] use pydantic
 [ ] use pandas
 [ ] fix chart error where first and last days are not being graphed
 [ ] testing
+[ ] set default end date to today on fe
+[ ] set default start date to end-30 days
