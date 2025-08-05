@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import date, datetime, timedelta
+from datetime import date as date_module, datetime, timedelta
 from typing import Optional, Dict, List
 import logging
 import asyncio
@@ -38,7 +38,7 @@ async def get_ticker_return(
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
     
-    if target_date > date.today():
+    if target_date > date_module.today():
         raise HTTPException(status_code=400, detail="Date cannot be in the future")
     
     ticker = ticker.upper()
